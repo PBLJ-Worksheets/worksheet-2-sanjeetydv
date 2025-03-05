@@ -1,0 +1,110 @@
+import java.util.*;
+class Video {
+    String name;
+    boolean isCheckedOut;
+    int rating;
+    Video(String name) {
+        this.name = name;
+        this.isCheckedOut = false;
+        this.rating = 0;
+    }
+}
+class VideoStore {
+    ArrayList<Video> videos = new ArrayList<>();
+
+    void addVideo(String name) {
+        videos.add(new Video(name));
+        System.out.println("Video: " + name);
+    }
+    void checkoutVideo(String name) {
+        for (Video video : videos) {
+            if (video.name.equals(name)) {
+                if (!video.isCheckedOut) {
+                    video.isCheckedOut = true;
+                    System.out.println("Checked out: " + name);
+                } else {
+                    System.out.println("Already checked out: " + name);
+                }
+                return;
+            }
+        }
+        System.out.println("Video not found: " + name);
+    }
+    void returnVideo(String name) {
+        for (Video video : videos) {
+            if (video.name.equals(name)) {
+                if (video.isCheckedOut) {
+                    video.isCheckedOut = false;
+                    System.out.println("Returned: " + name);
+                } else {
+                    System.out.println("Video was not checked out: " + name);
+                }
+                return;
+            }
+        }
+        System.out.println("Video not found: " + name);
+    }
+    void rateVideo(String name, int rating) {
+        for (Video video : videos) {
+            if (video.name.equals(name)) {
+                video.rating = rating;
+                System.out.println("Rated " + name + ": " + rating);
+                return;
+            }
+        }
+        System.out.println("Video not found: " + name);
+    }
+    void listVideos() {
+        System.out.println("details of the video ");
+        for (Video video : videos) {
+            System.out.println(video.name + " " + (video.isCheckedOut ? "Yes" : "No") + "" + video.rating);
+        }
+    }
+}
+public class main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        VideoStore store = new VideoStore();
+
+        while (true) {
+            System.out.println("1. add video");
+            System.out.println("2. checkout ");
+            System.out.println("3. return ");
+            System.out.println("4. rate ");
+            System.out.println("5. all List");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter video name: ");
+                    String name = scanner.nextLine();
+                    store.addVideo(name);
+                    break;
+                case 2:
+                    System.out.print("Enter video name: ");
+                    name = scanner.nextLine();
+                    store.checkoutVideo(name);
+                    break;
+                case 3:
+                    System.out.print("enter video name: ");
+                    name = scanner.nextLine();
+                    store.returnVideo(name);
+                    break;
+                case 4:
+                    System.out.print("enter video name: ");
+                    name = scanner.nextLine();
+                    System.out.print("enter rating ): ");
+                    int rating = scanner.nextInt();
+                    store.rateVideo(name, rating);
+                    break;
+                case 5:
+                    store.listVideos();
+                    break;
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        }
+    }
+    
+}
